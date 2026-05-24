@@ -92,7 +92,11 @@
         <div class="group bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden">
 
             <div class="relative overflow-hidden aspect-[3/4] bg-slate-100">
-                <img src="{{ asset('assets/' . $event->poster_path) }}" alt="{{ $event->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x600?text=Harap+Ubah+Database';">
+                @if($event->poster_path)
+                    <img src="{{ asset('storage/' . $event->poster_path) }}" alt="{{ $event->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                @else
+                    <img src="https://via.placeholder.com/400x600?text={{ urlencode($event->title) }}" alt="{{ $event->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                @endif
 
                 <div class="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur rounded-lg text-xs font-bold uppercase text-indigo-600">
                     {{ $event->category->name }}

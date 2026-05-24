@@ -5,8 +5,13 @@
         <!-- Left: Poster -->
         <div class="lg:col-span-1">
             <div class="sticky top-32">
-                <img src="{{url('assets/concert.png')}}" alt="Concert Poster"
-                    class="w-full rounded-[2.5rem] shadow-2xl border-8 border-white">
+                @if(isset($event) && $event->poster_path)
+                    <img src="{{ asset('storage/' . $event->poster_path) }}" alt="{{ $event->title ?? 'Event Poster' }}"
+                        class="w-full rounded-[2.5rem] shadow-2xl border-8 border-white">
+                @else
+                    <img src="{{url('assets/concert.png')}}" alt="Concert Poster"
+                        class="w-full rounded-[2.5rem] shadow-2xl border-8 border-white">
+                @endif
                 <div class="mt-8 p-6 bg-white rounded-3xl border border-slate-100 shadow-sm">
                     <h4 class="font-bold mb-4">Penyelenggara</h4>
                     <div class="flex items-center gap-4">
