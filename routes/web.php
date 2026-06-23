@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Admin\PartnerController as PartnerAdminController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\Admin\AuthController;
 
 // Rute User Area
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -18,19 +19,26 @@ Route::get('/event/{event}', [EventController::class,'show'])->name('events.show
 Route::get('/checkout/{event}', [CheckoutController::class, 'create'])->name('checkout.create');
 Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('checkout.store');
 Route::get('/my-ticket', [EventController::class, 'ticket'])->name('ticket');
-Route::get('/admin/partners', [PartnerController::class,'index'])->name('partners.index');
-Route::get('/admin/partners/create', [PartnerController::class,'create'])->name('partners.create');
 
 // Serve storage files - for both symlink and non-symlink environments
 Route::get('/storage/{path}', [StorageController::class, 'file'])->where('path', '.*');
 
-Route::group(['prefix' => 'admin', 'as' => 'admin.'], function () {
-    // Catatan: Dashboard & Login Auth di kemudian hari akan menempati blok ini juga
-    Route::resource('events', EventAdminController::class);
-    Route::resource('categories', CategoryController::class);
-    Route::resource('partners', PartnerAdminController::class);
-    Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+Route::get('/login', function () {
+    return redirect()->route('admin.login');
+})->name('login');
 
-    Route::get('/', [DashboardController::class,'index'])->name('dashboard');
-    // dan seterusnya...
+Route::prefix('admin')->name('admin.')->group(function () {
+    // Rute Login bebas akses
+    Route::get('login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('login', [AuthController::class, 'login'])->name('login.post');
+    Route::post('logout', [AuthController::class, 'logout'])->name('logout');
+
+    // Mengamankan Route Administrasi di balik tembok (Middleware)
+    Route::middleware(['auth', 'admin'])->group(function () {
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+        Route::resource('events', EventAdminController::class);
+        Route::resource('categories', CategoryController::class);
+        Route::resource('partners', PartnerAdminController::class);
+        Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
+    });
 });
