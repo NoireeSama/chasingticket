@@ -17,7 +17,7 @@
                     </svg>
                 </div>
                 <p class="text-slate-400 text-sm font-bold uppercase mb-1">Total Pendapatan</p>
-                <h3 class="text-2xl font-black">Rp 12.450.000</h3>
+                <h3 class="text-2xl font-black">Rp {{ number_format($totalRevenue, 0, ',', '.') }}</h3>
             </div>
             <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                 <div class="w-12 h-12 bg-green-50 text-green-600 rounded-2xl flex items-center justify-center mb-4">
@@ -28,7 +28,7 @@
                     </svg>
                 </div>
                 <p class="text-slate-400 text-sm font-bold uppercase mb-1">Tiket Terjual</p>
-                <h3 class="text-2xl font-black">1.284</h3>
+                <h3 class="text-2xl font-black">{{ number_format($ticketsSold, 0, ',', '.') }}</h3>
             </div>
             <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                 <div class="w-12 h-12 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center mb-4">
@@ -38,7 +38,7 @@
                     </svg>
                 </div>
                 <p class="text-slate-400 text-sm font-bold uppercase mb-1">Event Aktif</p>
-                <h3 class="text-2xl font-black">8 Event</h3>
+                <h3 class="text-2xl font-black">{{ number_format($activeEvents, 0, ',', '.') }}</h3>
             </div>
             <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm">
                 <div class="w-12 h-12 bg-rose-50 text-rose-600 rounded-2xl flex items-center justify-center mb-4">
@@ -48,7 +48,7 @@
                     </svg>
                 </div>
                 <p class="text-slate-400 text-sm font-bold uppercase mb-1">Pesanan Pending</p>
-                <h3 class="text-2xl font-black">12 Pesanan</h3>
+                <h3 class="text-2xl font-black">{{ number_format($pendingOrders, 0, ',', '.') }}</h3>
             </div>
         </div>
 
@@ -56,7 +56,7 @@
         <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
             <div class="p-8 border-b flex justify-between items-center">
                 <h3 class="font-black text-xl">Transaksi Terakhir</h3>
-                <a href="admin-transactions.html" class="text-indigo-600 font-bold hover:underline">Lihat Semua</a>
+                <a href="{{ route('admin.transactions.index') }}" class="text-indigo-600 font-bold hover:underline">Lihat Semua</a>
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse">
@@ -69,42 +69,32 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y border-t">
+                        @forelse($recentTransactions as $transaction)
                         <tr class="hover:bg-slate-50 transition">
                             <td class="px-8 py-6">
-                                <p class="font-bold uppercase tracking-wide text-sm">Donni Prabowo</p>
-                                <p class="text-xs text-slate-400">donni@example.com</p>
+                                <p class="font-bold uppercase tracking-wide text-sm">{{ $transaction->customer_name }}</p>
+                                <p class="text-xs text-slate-400">{{ $transaction->customer_email }}</p>
                             </td>
-                            <td class="px-8 py-6 font-medium text-slate-600">Jazz Night 2024</td>
+                            <td class="px-8 py-6 font-medium text-slate-600">{{ $transaction->event->title ?? '-' }}</td>
                             <td class="px-8 py-6">
-                                <span
-                                    class="px-3 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-bold uppercase">Success</span>
+                                @php
+                                    $status = strtolower($transaction->status);
+                                @endphp
+                                @if(in_array($status, ['settlement', 'success']))
+                                    <span class="px-3 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-bold uppercase">Success</span>
+                                @elseif($status === 'pending')
+                                    <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-lg text-xs font-bold uppercase">Pending</span>
+                                @else
+                                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold uppercase">{{ ucfirst($status) }}</span>
+                                @endif
                             </td>
-                            <td class="px-8 py-6 font-black text-indigo-600">Rp 155.000</td>
+                            <td class="px-8 py-6 font-black text-indigo-600">Rp {{ number_format($transaction->total_price, 0, ',', '.') }}</td>
                         </tr>
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="px-8 py-6">
-                                <p class="font-bold uppercase tracking-wide text-sm">Maya Sari</p>
-                                <p class="text-xs text-slate-400">maya@example.com</p>
-                            </td>
-                            <td class="px-8 py-6 font-medium text-slate-600">AI & Future Workshop</td>
-                            <td class="px-8 py-6">
-                                <span
-                                    class="px-3 py-1 bg-orange-100 text-orange-700 rounded-lg text-xs font-bold uppercase">Pending</span>
-                            </td>
-                            <td class="px-8 py-6 font-black text-indigo-600">Rp 55.000</td>
+                        @empty
+                        <tr>
+                            <td colspan="4" class="px-8 py-10 text-center text-slate-500">Belum ada transaksi terbaru.</td>
                         </tr>
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="px-8 py-6">
-                                <p class="font-bold uppercase tracking-wide text-sm">Budi Santoso</p>
-                                <p class="text-xs text-slate-400">budi@example.com</p>
-                            </td>
-                            <td class="px-8 py-6 font-medium text-slate-600">Hackathon 2024</td>
-                            <td class="px-8 py-6">
-                                <span
-                                    class="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold uppercase">Free</span>
-                            </td>
-                            <td class="px-8 py-6 font-black text-indigo-600">Rp 0</td>
-                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>

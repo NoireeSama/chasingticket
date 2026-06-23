@@ -1,0 +1,183 @@
+╔════════════════════════════════════════════════════════════════════╗
+║   AmikomHub Event Poster Upload - SETUP INSTRUCTIONS             ║
+║                                                                    ║
+║   Petunjuk Lengkap Setup Storage Symlink                         ║
+╚════════════════════════════════════════════════════════════════════╝
+
+MASALAH:
+--------
+Gambar event yang Anda upload tidak muncul di halaman publik dan admin.
+
+SOLUSI:
+-------
+Anda perlu membuat "symlink" (pintasan folder) agar file yang tersimpan
+di storage/app/public/ bisa diakses melalui web browser.
+
+ADA 3 CARA UNTUK MEMBUAT SYMLINK:
+
+═══════════════════════════════════════════════════════════════════════
+
+CARA 1: MENGGUNAKAN BATCH FILE (PALING MUDAH)
+==============================================
+
+1. Buka File Explorer
+2. Navigasi ke folder project: C:\laragon\www\AmikomHub3131-fitur-partner-3131
+3. Cari file: SETUP-STORAGE.bat
+4. Klik KANAN pada file tersebut
+5. Pilih: "Run as administrator"
+6. Tunggu hingga selesai
+7. Tekan Enter ketika diminta
+
+✓ Selesai! Gambar seharusnya sudah bisa ditampilkan.
+
+═══════════════════════════════════════════════════════════════════════
+
+CARA 2: MENGGUNAKAN COMMAND PROMPT MANUAL (RELIABLE)
+===================================================
+
+1. Tekan Windows + R
+2. Ketik: cmd
+3. Tekan CTRL + SHIFT + ENTER (untuk Run as Administrator)
+4. Klik "Yes" jika ada dialog UAC
+5. Ketik commands berikut (satu per satu):
+
+   cd /d C:\laragon\www\AmikomHub3131-fitur-partner-3131
+
+   mklink /D public\storage storage\app\public
+
+6. Tekan Enter
+7. Tunggu sampai ada pesan "symbolic link created..."
+8. Tutup Command Prompt
+
+✓ Selesai!
+
+═══════════════════════════════════════════════════════════════════════
+
+CARA 3: MENGGUNAKAN PYTHON SCRIPT
+================================
+
+1. Buka Command Prompt (biasa atau admin)
+2. Navigasi ke folder project:
+   cd C:\laragon\www\AmikomHub3131-fitur-partner-3131
+
+3. Jalankan Python script:
+   python setup-storage.py
+
+4. Tunggu sampai selesai
+
+✓ Selesai!
+
+═══════════════════════════════════════════════════════════════════════
+
+CARA 4: MENGGUNAKAN PHP SCRIPT
+=============================
+
+1. Buka Command Prompt
+2. Navigasi ke folder project:
+   cd C:\laragon\www\AmikomHub3131-fitur-partner-3131
+
+3. Jalankan:
+   php setup-storage.php
+
+4. Ikuti instruksi yang muncul
+
+═══════════════════════════════════════════════════════════════════════
+
+VERIFIKASI SETUP BERHASIL:
+==========================
+
+1. Buka File Explorer
+2. Navigasi ke: C:\laragon\www\AmikomHub3131-fitur-partner-3131\public
+3. Cari folder "storage"
+4. Jika ada folder dengan icon panah (→), berarti symlink berhasil!
+5. Atau coba:
+   - Klik kanan folder "storage"
+   - Pilih Properties
+   - Jika ada "Target:" berarti symlink sudah ada
+
+═══════════════════════════════════════════════════════════════════════
+
+JIKA MASIH TIDAK BERHASIL:
+==========================
+
+Jika Anda tidak bisa membuat symlink (mungkin karena permission),
+ada fallback yang sudah kami siapkan di StorageController:
+
+- Upload gambar akan tetap berfungsi
+- File akan tersimpan di storage/app/public/events/
+- Route /storage/{path} akan melayani file secara otomatis
+- Jadi gambar tetap bisa ditampilkan!
+
+═══════════════════════════════════════════════════════════════════════
+
+CARA MEMASTIKAN GAMBAR DITAMPILKAN:
+===================================
+
+Setelah membuat symlink (atau jika menggunakan fallback):
+
+1. Buka Admin Dashboard
+2. Klik "Kelola Event"
+3. Klik "+ Tambah Event Baru"
+4. Isi semua field:
+   - Judul Event
+   - Kategori
+   - Deskripsi
+   - Tanggal & Waktu
+   - Lokasi
+   - Harga
+   - Kapasitas
+   - POSTER EVENT: UPLOAD GAMBAR (JPG, PNG, max 2MB)
+
+5. Klik "Simpan Event"
+6. Jika berhasil, akan kembali ke daftar event
+
+MAKA GAMBAR AKAN MUNCUL DI:
+✓ Admin Dashboard - di tabel event sebagai thumbnail
+✓ Homepage - di grid event cards
+✓ Event Detail Page - display penuh di sebelah kiri
+
+═══════════════════════════════════════════════════════════════════════
+
+TROUBLESHOOTING:
+================
+
+Q: Saya jalankan SETUP-STORAGE.bat tapi tidak ada error?
+A: Buka File Explorer, lihat apakah folder "storage" muncul di public/.
+   Jika ada, berarti berhasil!
+
+Q: Muncul error "Access denied"?
+A: Pastikan:
+   - Jalankan sebagai Administrator
+   - Tidak ada File Explorer yang buka folder public/storage
+   - Tutup semua aplikasi yang buka folder ini
+
+Q: Saya jalankan Command Prompt tapi tidak bisa masuk admin?
+A: Coba cara 1 (SETUP-STORAGE.bat) atau hubungi IT untuk akses admin
+
+Q: Sudah setup tapi gambar masih tidak muncul?
+A: Coba:
+   1. Hard refresh browser: Ctrl + F5
+   2. Clear browser cache
+   3. Restart Laragon (stop & start)
+   4. Jalankan: php artisan cache:clear
+
+═══════════════════════════════════════════════════════════════════════
+
+BANTUAN LEBIH LANJUT:
+====================
+
+File-file yang tersedia untuk setup:
+- SETUP-STORAGE.bat      (Batch file - paling mudah)
+- setup-storage.py       (Python script)
+- setup-storage.php      (PHP script)
+- verify-storage.php     (Untuk verifikasi)
+- install-storage-link.php
+
+Dokumentasi:
+- README.md
+- SETUP_STORAGE_LINK.md
+- IMPLEMENTATION_SUMMARY.md
+
+═══════════════════════════════════════════════════════════════════════
+
+Created with ❤️ untuk AmikomHub Event Platform

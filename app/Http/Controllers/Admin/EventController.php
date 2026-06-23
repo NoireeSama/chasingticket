@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -13,9 +14,23 @@ class EventController extends Controller
      */
     public function index()
     {
-        // Memakai relasi dan pengaturan limit paginasi (10 entri per halaman)
-        $events = \App\Models\Event::with('category')->latest()->paginate(10);
-        return view('admin.events.index', compact('events'));
+        $search = request('search');
+        $sortBy = request('sort_by', 'latest');
+
+        $query = Event::with('category');
+
+        if ($search) {
+            $query->where('title', 'LIKE', '%' . $search . '%');
+        }
+
+        if ($sortBy === 'oldest') {
+            $query->oldest();
+        } else {
+            $query->latest();
+        }
+
+        $events = $query->paginate(10)->appends(request()->query());
+        return view('admin.events.index', compact('events', 'search', 'sortBy'));
     }
 
     /**
@@ -40,8 +55,16 @@ class EventController extends Controller
             'date' => 'required|date',
             'location' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'stock' => 'required|numeric'
+            'stock' => 'required|numeric',
+            'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
+
+        // Handle poster upload
+        if ($request->hasFile('poster')) {
+            $file = $request->file('poster');
+            $path = $file->store('events', 'public');
+            $data['poster_path'] = $path;
+        }
 
         // Menyimpan data yang telah divalidasi ke dalam tabel menggunakan Model
         \App\Models\Event::create($data);
@@ -78,12 +101,25 @@ class EventController extends Controller
             'date' => 'required|date',
             'location' => 'required|string|max:255',
             'price' => 'required|numeric',
-            'stock' => 'required|numeric'
+            'stock' => 'required|numeric',
+            'poster' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-    
+
+        // Handle poster upload
+        if ($request->hasFile('poster')) {
+            // Delete old poster if exists
+            if ($event->poster_path && Storage::disk('public')->exists($event->poster_path)) {
+                Storage::disk('public')->delete($event->poster_path);
+            }
+            
+            $file = $request->file('poster');
+            $path = $file->store('events', 'public');
+            $data['poster_path'] = $path;
+        }
+
         $event->update($data);
-    
-        return redirect()->route('admin.events.index')->with('success', 'Rincian data event berhasil diperbarui.');    
+
+        return redirect()->route('admin.events.index')->with('success', 'Rincian data event berhasil diperbarui.');
     }
 
     /**

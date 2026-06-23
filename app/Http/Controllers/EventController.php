@@ -9,18 +9,25 @@ use Illuminate\Http\Request;
 class EventController extends Controller
 {
     function index(){
-    
+
     }
 
-    function show(){
-        return view('event-detail');
+    function show(Event $event){
+        $categories = \App\Models\Category::all();
+        return view('event-detail', compact('event', 'categories'));
     }
 
     function checkout(){
-        return view('checkout');
+        $categories = \App\Models\Category::all();
+        return view('checkout', compact('categories'));
     }
 
     function ticket(){
-        return view('ticket');
+        $categories = \App\Models\Category::all();
+        $transaction = null;
+        if (session()->has('transaction_id')) {
+            $transaction = \App\Models\Transaction::with('event')->find(session('transaction_id'));
+        }
+        return view('ticket', compact('categories', 'transaction'));
     }
 }

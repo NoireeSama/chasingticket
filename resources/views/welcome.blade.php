@@ -46,6 +46,25 @@
     </div>
 </section>
 
+<section class="max-w-7xl mx-auto px-6 py-20">
+    <div class="mb-12">
+        <h2 class="text-3xl font-extrabold mb-2">Mitra Kami</h2>
+        <p class="text-slate-500 font-medium">Bekerjasama dengan platform dan event organizer terkemuka</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        @forelse($partners as $partner)
+        <div class="group bg-white rounded-2xl border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden p-6 flex items-center justify-center min-h-32">
+            <img src="{{ $partner->url_Logo }}" alt="{{ $partner->name }}" class="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300" onerror="this.onerror=null;this.src='https://via.placeholder.com/300x100?text={{ urlencode($partner->name) }}';">
+        </div>
+        @empty
+        <div class="col-span-full text-center py-12 text-slate-500">
+            <p>Belum ada partner yang ditampilkan</p>
+        </div>
+        @endforelse
+    </div>
+</section>
+
 <section id="events" class="max-w-7xl mx-auto px-6 py-20">
     <div class="flex justify-between items-end mb-12">
         <div>
@@ -73,7 +92,11 @@
         <div class="group bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-2xl transition-all duration-300 overflow-hidden">
 
             <div class="relative overflow-hidden aspect-[3/4] bg-slate-100">
-                <img src="{{ asset('assets/' . $event->poster_path) }}" alt="{{ $event->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" onerror="this.onerror=null;this.src='https://via.placeholder.com/400x600?text=Harap+Ubah+Database';">
+                @if($event->poster_path)
+                    <img src="{{ asset('storage/' . $event->poster_path) }}" alt="{{ $event->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                @else
+                    <img src="https://via.placeholder.com/400x600?text={{ urlencode($event->title) }}" alt="{{ $event->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                @endif
 
                 <div class="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur rounded-lg text-xs font-bold uppercase text-indigo-600">
                     {{ $event->category->name }}
