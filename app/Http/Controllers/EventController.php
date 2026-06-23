@@ -24,6 +24,10 @@ class EventController extends Controller
 
     function ticket(){
         $categories = \App\Models\Category::all();
-        return view('ticket', compact('categories'));
+        $transaction = null;
+        if (session()->has('transaction_id')) {
+            $transaction = \App\Models\Transaction::with('event')->find(session('transaction_id'));
+        }
+        return view('ticket', compact('categories', 'transaction'));
     }
 }
