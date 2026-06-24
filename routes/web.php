@@ -18,6 +18,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/event/{event}', [EventController::class,'show'])->name('events.show');
 Route::get('/checkout/{event}', [CheckoutController::class, 'create'])->name('checkout.create');
 Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('checkout.store');
+Route::get('/payment/{order_id}', [CheckoutController::class, 'payment'])->name('checkout.payment');
+Route::get('/success/{order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
 Route::get('/my-ticket', [EventController::class, 'ticket'])->name('ticket');
 
 // Serve storage files - for both symlink and non-symlink environments
