@@ -62,37 +62,39 @@
                 <table class="w-full text-left border-collapse">
                     <thead class="bg-slate-50 text-slate-400 uppercase text-[10px] font-black tracking-widest">
                         <tr>
-                            <th class="px-8 py-4">Pembeli</th>
-                            <th class="px-8 py-4">Event</th>
-                            <th class="px-8 py-4">Status</th>
-                            <th class="px-8 py-4">Total</th>
+                            <th class="px-8 py-4 w-1/4">Tgl Transaksi</th>
+                            <th class="px-8 py-4 w-1/4">Pembeli</th>
+                            <th class="px-8 py-4 w-1/4">Event</th>
+                            <th class="px-8 py-4 w-[10%]">Status</th>
+                            <th class="px-8 py-4 text-right">Total</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y border-t">
-                        @forelse($recentTransactions as $transaction)
+                        @forelse($recentTransactions as $trx)
                         <tr class="hover:bg-slate-50 transition">
-                            <td class="px-8 py-6">
-                                <p class="font-bold uppercase tracking-wide text-sm">{{ $transaction->customer_name }}</p>
-                                <p class="text-xs text-slate-400">{{ $transaction->customer_email }}</p>
+                            <td class="px-8 py-6 text-sm text-slate-600 max-w-xs break-all">
+                                {{ $trx->created_at->format('d M y - H:i') }}<br>
+                                <span class="text-xs text-slate-400">{{ $trx->order_id }}</span>
                             </td>
-                            <td class="px-8 py-6 font-medium text-slate-600">{{ $transaction->event->title ?? '-' }}</td>
                             <td class="px-8 py-6">
-                                @php
-                                    $status = strtolower($transaction->status);
-                                @endphp
-                                @if(in_array($status, ['settlement', 'success']))
+                                <p class="font-bold uppercase tracking-wide text-sm truncate max-w-[150px]">{{ $trx->customer_name }}</p>
+                                <p class="text-xs text-slate-400 truncate max-w-[150px]">{{ $trx->customer_email }}</p>
+                            </td>
+                            <td class="px-8 py-6 font-medium text-slate-600 max-w-xs truncate">{{ $trx->event->title ?? '-' }}</td>
+                            <td class="px-8 py-6 whitespace-nowrap">
+                                @if($trx->status === 'settlement' || $trx->status === 'success')
                                     <span class="px-3 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-bold uppercase">Success</span>
-                                @elseif($status === 'pending')
+                                @elseif($trx->status === 'pending')
                                     <span class="px-3 py-1 bg-orange-100 text-orange-700 rounded-lg text-xs font-bold uppercase">Pending</span>
                                 @else
-                                    <span class="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold uppercase">{{ ucfirst($status) }}</span>
+                                    <span class="px-3 py-1 bg-rose-100 text-rose-700 rounded-lg text-xs font-bold uppercase">{{ $trx->status }}</span>
                                 @endif
                             </td>
-                            <td class="px-8 py-6 font-black text-indigo-600">Rp {{ number_format($transaction->total_price, 0, ',', '.') }}</td>
+                            <td class="px-8 py-6 font-black text-indigo-600 whitespace-nowrap text-right">Rp {{ number_format($trx->total_price, 0, ',', '.') }}</td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="4" class="px-8 py-10 text-center text-slate-500">Belum ada transaksi terbaru.</td>
+                            <td colspan="5" class="px-8 py-10 text-center text-slate-500">Belum ada transaksi</td>
                         </tr>
                         @endforelse
                     </tbody>

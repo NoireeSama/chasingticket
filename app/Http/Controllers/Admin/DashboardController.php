@@ -15,7 +15,7 @@ class DashboardController extends Controller
         $ticketsSold = Transaction::whereIn('status', ['success', 'settlement'])->count();
         $activeEvents = Event::where('date', '>=', now())->count();
         $pendingOrders = Transaction::where('status', 'pending')->count();
-        $recentTransactions = Transaction::with('event')->latest()->take(3)->get();
+        $recentTransactions = Transaction::with('event')->latest()->take(5)->get();
 
         return view('admin.dashboard', compact(
             'totalRevenue',

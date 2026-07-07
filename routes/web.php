@@ -20,6 +20,7 @@ Route::get('/checkout/{event}', [CheckoutController::class, 'create'])->name('ch
 Route::post('/checkout/{event}', [CheckoutController::class, 'store'])->name('checkout.store');
 Route::get('/payment/{order_id}', [CheckoutController::class, 'payment'])->name('checkout.payment');
 Route::get('/success/{order_id}', [CheckoutController::class, 'success'])->name('checkout.success');
+//Route::post('/midtrans/callback', [\App\Http\Controllers\MidtransWebhookController::class, 'handle']);
 Route::get('/my-ticket', [EventController::class, 'ticket'])->name('ticket');
 
 // Serve storage files - for both symlink and non-symlink environments
