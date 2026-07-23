@@ -8,7 +8,6 @@ class Category extends Model
 {
     protected $fillable = ['name', 'slug'];
 
-    // Menandakan atribut: 1 Kategori dapat memiliki banyak list Event
     public function events()
     {
         return $this->hasMany(Event::class);

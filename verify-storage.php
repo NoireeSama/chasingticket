@@ -1,8 +1,4 @@
 <?php
-/**
- * Storage Setup Verification Script
- * Place this in your project root and run: php verify-storage.php
- */
 
 echo "\n=== AmikomHub Event Storage Verification ===\n\n";
 
@@ -11,7 +7,6 @@ $storagePath = $projectRoot . '/storage/app/public';
 $publicPath = $projectRoot . '/public';
 $symlink = $publicPath . '/storage';
 
-// 1. Check storage folder
 echo "1. Checking storage folder...\n";
 if (is_dir($storagePath)) {
     echo "   ✓ storage/app/public exists\n";
@@ -19,7 +14,6 @@ if (is_dir($storagePath)) {
     echo "   ✗ storage/app/public NOT found\n";
 }
 
-// 2. Check events folder
 $eventsPath = $storagePath . '/events';
 echo "\n2. Checking events folder...\n";
 if (is_dir($eventsPath)) {
@@ -39,7 +33,6 @@ if (is_dir($eventsPath)) {
     echo "   ✗ storage/app/public/events NOT found\n";
 }
 
-// 3. Check symlink
 echo "\n3. Checking public/storage symlink...\n";
 if (is_link($symlink)) {
     $target = readlink($symlink);
@@ -51,7 +44,6 @@ if (is_link($symlink)) {
     echo "   → Run: mklink /D \"public\\storage\" \"storage\\app\\public\"\n";
 }
 
-// 4. Check if files are accessible
 echo "\n4. Testing file accessibility...\n";
 if (is_dir($eventsPath)) {
     $files = array_diff(scandir($eventsPath), ['.', '..', '.gitignore']);
@@ -66,7 +58,6 @@ if (is_dir($eventsPath)) {
     }
 }
 
-// 5. Configuration check
 echo "\n5. Checking Laravel config...\n";
 $configFile = $projectRoot . '/config/filesystems.php';
 if (file_exists($configFile)) {
@@ -75,7 +66,6 @@ if (file_exists($configFile)) {
     echo "   ✗ config/filesystems.php NOT found\n";
 }
 
-// 6. Route check
 echo "\n6. Checking routes...\n";
 $routeFile = $projectRoot . '/routes/web.php';
 if (file_exists($routeFile)) {

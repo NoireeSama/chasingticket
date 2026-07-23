@@ -36,12 +36,27 @@ class PartnerController extends Controller
 
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'url_Logo' => 'required|url',
+            'logo_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'url_Logo' => 'nullable|string',
         ]);
 
-        Partner::create($data);
+        if (!$request->hasFile('logo_file') && empty($request->url_Logo)) {
+            return back()->withErrors(['logo_file' => 'Unggah berkas logo atau masukkan URL logo partner.'])->withInput();
+        }
+
+        $urlLogo = $request->url_Logo;
+
+        if ($request->hasFile('logo_file')) {
+            $path = $request->file('logo_file')->store('partners', 'public');
+            $urlLogo = asset('storage/' . $path);
+        }
+
+        Partner::create([
+            'name' => $request->name,
+            'url_Logo' => $urlLogo,
+        ]);
 
         return redirect()->route('admin.partners.index')->with('success', 'Partner berhasil ditambahkan.');
     }
@@ -53,12 +68,25 @@ class PartnerController extends Controller
 
     public function update(Request $request, Partner $partner)
     {
-        $data = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:255',
-            'url_Logo' => 'required|url',
+            'logo_file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg,webp|max:2048',
+            'url_Logo' => 'nullable|string',
         ]);
 
-        $partner->update($data);
+        $urlLogo = $partner->url_Logo;
+
+        if ($request->hasFile('logo_file')) {
+            $path = $request->file('logo_file')->store('partners', 'public');
+            $urlLogo = asset('storage/' . $path);
+        } elseif ($request->filled('url_Logo')) {
+            $urlLogo = $request->url_Logo;
+        }
+
+        $partner->update([
+            'name' => $request->name,
+            'url_Logo' => $urlLogo,
+        ]);
 
         return redirect()->route('admin.partners.index')->with('success', 'Partner berhasil diperbarui.');
     }

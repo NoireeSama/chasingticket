@@ -5,23 +5,22 @@
 
 @section('content')
 
-
-        <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+        <div class="bg-white rounded-[30px] border-2 border-[#f1f5f9] shadow-[0_15px_35px_rgba(0,0,0,0.04)]    overflow-hidden">
             <div class="px-8 py-6 bg-slate-50/50 border-b flex flex-wrap gap-4 items-center">
                 <div class="flex-1 min-w-[300px] flex gap-2">
                     <input type="text" placeholder="Cari Order ID, Nama, atau Email..."
-                        class="flex-1 px-5 py-3 rounded-xl border-slate-200 border bg-white focus:ring-2 focus:ring-indigo-500 outline-none transition uppercase text-sm font-medium tracking-wide">
+                        class="flex-1 px-5 py-3 rounded-[30px] border-slate-200 border bg-white focus:ring-2 focus:ring-[#103370] outline-none transition uppercase text-sm font-medium tracking-wide">
                 </div>
                 <div class="flex gap-2">
                     <select
-                        class="px-5 py-3 rounded-xl border-slate-200 border bg-white outline-none text-sm font-bold">
+                        class="px-5 py-3 rounded-[30px] border-slate-200 border bg-white outline-none text-sm font-bold">
                         <option>Semua Status</option>
                         <option class="text-green-600">Success</option>
                         <option class="text-orange-600">Pending</option>
                         <option class="text-rose-600">Expired</option>
                     </select>
                     <select
-                        class="px-5 py-3 rounded-xl border-slate-200 border bg-white outline-none text-sm font-bold">
+                        class="px-5 py-3 rounded-[30px] border-slate-200 border bg-white outline-none text-sm font-bold">
                         <option>Bulan Ini</option>
                         <option>Bulan Lalu</option>
                         <option>Tahun 2024</option>
@@ -45,7 +44,7 @@
                         <tr class="hover:bg-slate-50/50 transition">
                             <td class="px-8 py-6">
                                 <span
-                                    class="font-mono font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg text-sm">#TRX-99210</span>
+                                    class="font-mono font-bold text-[#103370] bg-[#103370]/10 px-3 py-1 rounded-full text-sm">#TRX-99210</span>
                             </td>
                             <td class="px-8 py-6">
                                 <p class="font-bold text-slate-800">Donni Prabowo</p>
@@ -59,7 +58,7 @@
                             </td>
                             <td class="px-8 py-6">
                                 <span
-                                    class="px-3 py-1 bg-green-100 text-green-700 rounded-lg text-xs font-bold uppercase ring-1 ring-green-200">Success</span>
+                                    class="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-bold uppercase ring-1 ring-green-200">Success</span>
                             </td>
                             <td class="px-8 py-6 text-right font-black text-slate-900">
                                 Rp 155.000
@@ -68,7 +67,7 @@
                         <tr class="hover:bg-slate-50/50 transition text-slate-400">
                             <td class="px-8 py-6">
                                 <span
-                                    class="font-mono font-bold bg-slate-100 px-3 py-1 rounded-lg text-sm">#TRX-99209</span>
+                                    class="font-mono font-bold bg-slate-100 px-3 py-1 rounded-full text-sm">#TRX-99209</span>
                             </td>
                             <td class="px-8 py-6">
                                 <p class="font-bold">Maya Sari</p>
@@ -82,7 +81,7 @@
                             </td>
                             <td class="px-8 py-6">
                                 <span
-                                    class="px-3 py-1 bg-orange-100 text-orange-700 rounded-lg text-xs font-bold uppercase ring-1 ring-orange-200">Pending</span>
+                                    class="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-xs font-bold uppercase ring-1 ring-orange-200">Pending</span>
                             </td>
                             <td class="px-8 py-6 text-right font-black">
                                 Rp 55.000
@@ -91,7 +90,7 @@
                         <tr class="hover:bg-slate-50/50 transition">
                             <td class="px-8 py-6">
                                 <span
-                                    class="font-mono font-bold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg text-sm">#TRX-99208</span>
+                                    class="font-mono font-bold text-[#103370] bg-[#103370]/10 px-3 py-1 rounded-full text-sm">#TRX-99208</span>
                             </td>
                             <td class="px-8 py-6">
                                 <p class="font-bold text-slate-800">Budi Santoso</p>
@@ -105,13 +104,13 @@
                             </td>
                             <td class="px-8 py-6">
                                 <span
-                                    class="px-3 py-1 bg-slate-100 text-slate-600 rounded-lg text-xs font-bold uppercase ring-1 ring-slate-200">Free</span>
+                                    class="px-3 py-1 bg-slate-100 text-slate-600 rounded-full text-xs font-bold uppercase ring-1 ring-slate-200">Free</span>
                             </td>
                             <td class="px-8 py-6 text-right font-black text-slate-900">
                                 Rp 0
                             </td>
                         </tr>
-                        <!-- More rows... -->
+
                     </tbody>
                 </table>
             </div>
@@ -120,11 +119,11 @@
                 <p class="text-sm text-slate-500 font-medium">Menampilkan 3 dari 124 transaksi</p>
                 <div class="flex gap-2">
                     <button
-                        class="px-4 py-2 border rounded-xl hover:bg-white transition text-sm font-bold opacity-50 cursor-not-allowed">Previous</button>
-                    <button class="px-4 py-2 bg-indigo-600 text-white rounded-xl shadow-md text-sm font-bold">1</button>
-                    <button class="px-4 py-2 border rounded-xl hover:bg-white transition text-sm font-bold">2</button>
+                        class="px-4 py-2 border rounded-[30px] hover:bg-white transition text-sm font-bold opacity-50 cursor-not-allowed">Previous</button>
+                    <button class="px-4 py-2 bg-white text-slate-800  font-bold rounded-[30px] shadow-[0_15px_35px_rgba(0,0,0,0.04)]   text-sm font-bold">1</button>
+                    <button class="px-4 py-2 border rounded-[30px] hover:bg-white transition text-sm font-bold">2</button>
                     <button
-                        class="px-4 py-2 border rounded-xl hover:bg-white transition text-sm font-bold">Next</button>
+                        class="px-4 py-2 border rounded-[30px] hover:bg-white transition text-sm font-bold">Next</button>
                 </div>
             </div>
         </div>

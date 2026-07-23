@@ -1,9 +1,4 @@
 <?php
-/**
- * Create Storage Directory Structure
- * This creates the public/storage directory that will serve as fallback
- * even if symlink creation fails
- */
 
 $dirs = [
     __DIR__ . '/public/storage',
@@ -24,7 +19,6 @@ foreach ($dirs as $dir) {
     }
 }
 
-// Create index.php in storage
 $indexContent = <<<'PHP'
 <?php
 // Storage File Server - Fallback for public/storage

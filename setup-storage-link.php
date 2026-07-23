@@ -1,9 +1,8 @@
 <?php
-// Simple Storage Link Creator
+
 $linkPath = __DIR__ . '/public/storage';
 $targetPath = __DIR__ . '/storage/app/public';
 
-// Normalize paths
 $linkPath = str_replace('/', '\\', $linkPath);
 $targetPath = str_replace('/', '\\', $targetPath);
 
@@ -11,13 +10,11 @@ echo "🔗 Creating Storage Symlink...\n";
 echo "Link: $linkPath\n";
 echo "Target: $targetPath\n\n";
 
-// Check if target exists
 if (!is_dir($targetPath)) {
     echo "❌ Error: Target directory does not exist!\n";
     exit(1);
 }
 
-// Check if link already exists
 if (file_exists($linkPath)) {
     echo "⚠️  Link already exists!\n";
     if (is_link($linkPath)) {
@@ -33,11 +30,9 @@ if (file_exists($linkPath)) {
     }
 }
 
-// Try mklink command on Windows
 echo "Attempting to create symlink with mklink...\n";
 $cmd = "mklink /D \"$linkPath\" \"$targetPath\" 2>&1";
 
-// Run command
 exec($cmd, $output, $returnCode);
 
 if ($returnCode === 0) {
@@ -47,10 +42,8 @@ if ($returnCode === 0) {
     echo "\n❌ Failed to create symlink with return code: $returnCode\n";
     echo "Output: " . implode("\n", $output) . "\n";
 
-    // Try alternative method
     echo "\n⚠️  Trying alternative method...\n";
 
-    // Try PHP symlink
     if (@symlink($targetPath, $linkPath)) {
         echo "✅ Symlink created using PHP symlink()\n";
     } else {
@@ -61,7 +54,6 @@ if ($returnCode === 0) {
     }
 }
 
-// Verify
 echo "\n🔍 Verifying symlink...\n";
 if (is_link($linkPath)) {
     $target = readlink($linkPath);

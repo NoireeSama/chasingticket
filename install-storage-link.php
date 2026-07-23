@@ -1,14 +1,9 @@
 <?php
-/**
- * Storage Symlink Creator
- * This script creates a symbolic link from public/storage to storage/app/public
- */
 
 $projectRoot = __DIR__;
 $linkPath = $projectRoot . DIRECTORY_SEPARATOR . 'public' . DIRECTORY_SEPARATOR . 'storage';
 $targetPath = $projectRoot . DIRECTORY_SEPARATOR . 'storage' . DIRECTORY_SEPARATOR . 'app' . DIRECTORY_SEPARATOR . 'public';
 
-// Normalize to actual paths
 $linkPath = realpath(dirname($linkPath)) . DIRECTORY_SEPARATOR . basename($linkPath);
 $targetPath = realpath($targetPath);
 
@@ -28,7 +23,6 @@ echo "  ✓ Target directory exists\n\n";
 
 echo "[2/3] Creating symlink...\n";
 
-// Remove existing
 if (file_exists($linkPath) || is_link($linkPath)) {
     echo "  Removing existing link/directory...\n";
     if (is_link($linkPath)) {
@@ -38,7 +32,6 @@ if (file_exists($linkPath) || is_link($linkPath)) {
     }
 }
 
-// Create symlink using Windows mklink command
 $command = sprintf('mklink /D "%s" "%s" 2>&1', $linkPath, $targetPath);
 $output = shell_exec($command);
 
@@ -61,7 +54,6 @@ if (is_link($linkPath)) {
     echo "  ❌ Symlink not found\n";
     echo "\n  Trying alternative approach...\n";
 
-    // Try with PHP's symlink function
     if (@symlink($targetPath, $linkPath)) {
         echo "  ✓ Symlink created with PHP symlink()\n";
     } else {

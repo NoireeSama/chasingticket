@@ -30,7 +30,7 @@ class EventTicketMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            // Menentukan lokasi view HTML email di folder resources/views/emails/...
+
             view: 'emails.ticket',
         );
     }

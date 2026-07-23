@@ -1,6 +1,4 @@
 <?php
-// Aggressive Storage Symlink Creator
-// This attempts multiple methods to create the symlink
 
 $base = __DIR__;
 $link = $base . '\\public\\storage';
@@ -10,13 +8,11 @@ echo "Attempting to create storage symlink...\n";
 echo "Link: $link\n";
 echo "Target: $target\n\n";
 
-// Method 1: Try PHP symlink
 if (@symlink($target, $link)) {
     echo "✓ Created with PHP symlink()\n";
     exit(0);
 }
 
-// Method 2: Try exec with mklink
 $output = [];
 $result = 0;
 @exec("mklink /D \"$link\" \"$target\" 2>&1", $output, $result);
@@ -27,14 +23,12 @@ if ($result == 0) {
     exit(0);
 }
 
-// Method 3: Try system command
 @system("mklink /D \"$link\" \"$target\" 2>&1", $result);
 if ($result == 0) {
     echo "✓ Created with system command\n";
     exit(0);
 }
 
-// Method 4: Try shell_exec
 $out = @shell_exec("mklink /D \"$link\" \"$target\" 2>&1");
 if ($out && strpos($out, 'created') !== false) {
     echo "✓ Created with shell_exec\n";
@@ -42,7 +36,6 @@ if ($out && strpos($out, 'created') !== false) {
     exit(0);
 }
 
-// Method 5: Try proc_open for more control
 $descriptorspec = [
     0 => ["pipe", "r"],
     1 => ["pipe", "w"],
@@ -61,7 +54,6 @@ if (is_resource($process)) {
     }
 }
 
-// All methods failed
 echo "❌ All methods failed\n\n";
 echo "Please run this command manually in Command Prompt (as Administrator):\n";
 echo "mklink /D \"$link\" \"$target\"\n";

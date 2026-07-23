@@ -1,6 +1,4 @@
 <?php
-// Storage Link Setup - Programmatic Approach
-// This creates the public/storage directory structure
 
 $publicStoragePath = __DIR__ . '/public/storage';
 
@@ -8,7 +6,6 @@ echo "╔═══════════════════════�
 echo "║       AmikomHub Event Poster Upload - Symlink Setup          ║\n";
 echo "╚════════════════════════════════════════════════════════════════╝\n\n";
 
-// Step 1: Create public/storage directory
 echo "[Step 1] Creating public/storage directory...\n";
 if (!is_dir($publicStoragePath)) {
     if (@mkdir($publicStoragePath, 0755, true)) {
@@ -21,7 +18,6 @@ if (!is_dir($publicStoragePath)) {
     echo "✓ public/storage directory already exists\n";
 }
 
-// Step 2: Create .htaccess for symlink fallback
 echo "\n[Step 2] Creating .htaccess for fallback routing...\n";
 $htaccess = <<<'HTACCESS'
 <IfModule mod_rewrite.c>
@@ -42,7 +38,6 @@ if (@file_put_contents($publicStoragePath . '/.htaccess', $htaccess)) {
     echo "✓ .htaccess created for fallback\n";
 }
 
-// Step 3: Create index.php for fallback
 echo "\n[Step 3] Creating fallback handler...\n";
 $index = <<<'PHP'
 <?php
@@ -83,14 +78,13 @@ if (@file_put_contents($publicStoragePath . '/index.php', $index)) {
     echo "✓ Fallback handler created\n";
 }
 
-// Step 4: Attempt to create symlink
 echo "\n[Step 4] Attempting to create symlink...\n";
 $storageAppPublic = __DIR__ . '/storage/app/public';
 
 if (@symlink($storageAppPublic, $publicStoragePath)) {
     echo "✓ Symlink created successfully!\n";
 } else {
-    // Try with Windows command
+
     $cmd = 'mklink /D "' . str_replace('/', '\\', $publicStoragePath) . '" "' . str_replace('/', '\\', $storageAppPublic) . '"';
     $output = @shell_exec($cmd . ' 2>&1');
 
@@ -104,7 +98,6 @@ if (@symlink($storageAppPublic, $publicStoragePath)) {
     }
 }
 
-// Final verification
 echo "\n╔════════════════════════════════════════════════════════════════╗\n";
 
 if (is_dir($publicStoragePath)) {

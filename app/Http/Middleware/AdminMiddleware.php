@@ -9,23 +9,17 @@ use Illuminate\Support\Facades\Auth;
 
 class AdminMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
+
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
+        if (Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'merchant')) {
             return $next($request);
         }
 
-        // If logged in but not admin, redirect with error
         if (Auth::check()) {
-            return redirect('/')->with('error', 'Anda tidak memiliki hak akses ke halaman Admin.');
+            return redirect('/')->with('error', 'Anda tidak memiliki hak akses ke halaman ini.');
         }
 
-        // If not logged in, redirect to login page
         return redirect()->route('admin.login')->with('error', 'Silakan login terlebih dahulu.');
     }
 }
