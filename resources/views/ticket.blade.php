@@ -161,7 +161,7 @@
         <!-- Card Footer Action Buttons (Hidden on Print) -->
         <div class="p-6 md:p-8 bg-slate-50 border-t border-slate-100 no-print space-y-4">
             <button onclick="window.print()"
-                class="w-full py-4 bg-[#103370] text-white hover:bg-[#F24781] font-extrabold text-base rounded-full shadow-[0_10px_25px_rgba(16,51,112,0.25)] hover:shadow-[0_10px_25px_rgba(242,71,129,0.35)] transition-all duration-300 transform active:scale-98 flex items-center justify-center gap-2">
+                class="w-full py-5 px-8 bg-[#103370] text-white hover:bg-[#F24781] font-black text-base md:text-lg rounded-full min-h-[60px] shadow-[0_12px_30px_rgba(16,51,112,0.3)] hover:shadow-[0_15px_35px_rgba(242,71,129,0.4)] transition-all duration-300 transform active:scale-98 flex items-center justify-center gap-3 tracking-wide">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
                 </svg>

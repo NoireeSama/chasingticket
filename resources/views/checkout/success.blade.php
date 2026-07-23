@@ -47,10 +47,10 @@
                 </div>
             </div>
 
-            <div class="space-y-3">
-                <a href="{{ route('history') }}" class="inline-flex items-center justify-center gap-2 w-full py-4.5 bg-[#103370] text-white hover:bg-[#F24781] font-extrabold text-base rounded-full shadow-[0_10px_25px_rgba(16,51,112,0.25)] hover:shadow-[0_10px_25px_rgba(242,71,129,0.35)] transition-all duration-300 transform active:scale-98">
+            <div class="space-y-4">
+                <a href="{{ route('history') }}" class="inline-flex items-center justify-center gap-3 w-full py-5 md:py-6 px-8 bg-[#103370] text-white hover:bg-[#F24781] font-black text-lg md:text-xl rounded-full min-h-[64px] shadow-[0_12px_30px_rgba(16,51,112,0.3)] hover:shadow-[0_15px_35px_rgba(242,71,129,0.4)] transition-all duration-300 transform active:scale-98 tracking-wide">
                     <span>Lihat Tiket Saya</span>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
                     </svg>
                 </a>

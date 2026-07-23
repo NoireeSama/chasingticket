@@ -37,7 +37,7 @@
                     </div>
                 </div>
 
-                <button id="pay-button" class="w-full py-4.5 bg-[#103370] text-white font-extrabold text-lg md:text-xl rounded-full shadow-[0_10px_25px_rgba(16,51,112,0.25)] hover:bg-[#F24781] hover:shadow-[0_10px_25px_rgba(242,71,129,0.35)] transition-all duration-300 transform active:scale-98 flex items-center justify-center gap-3">
+                <button id="pay-button" class="w-full py-5 md:py-6 px-8 bg-[#103370] text-white font-black text-lg md:text-xl rounded-full min-h-[64px] shadow-[0_12px_30px_rgba(16,51,112,0.3)] hover:bg-[#F24781] hover:shadow-[0_15px_35px_rgba(242,71,129,0.4)] transition-all duration-300 transform active:scale-98 flex items-center justify-center gap-3 tracking-wide">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                     </svg>
