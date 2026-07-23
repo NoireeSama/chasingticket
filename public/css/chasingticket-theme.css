@@ -382,17 +382,24 @@ html {
     
     .event-category-badge {
         position: absolute;
-        top: 15px;
-        left: 15px;
+        top: 16px;
+        left: 16px;
         background: var(--color-lime);
         color: var(--color-dark-blue);
-        padding: 0.5rem 1.25rem;
+        border: 2px solid var(--color-dark-blue);
+        padding: 0.45rem 1.15rem;
         border-radius: 50px;
-        font-weight: 800;
+        font-weight: 900;
         font-size: 0.75rem;
+        letter-spacing: 1px;
         text-transform: uppercase;
-        box-shadow: 0 4px 15px rgba(184, 255, 0, 0.4);
-        z-index: 2;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+        z-index: 10;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        line-height: 1;
+        pointer-events: none;
     }
     
     .event-empty-badge {

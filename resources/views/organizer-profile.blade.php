@@ -156,10 +156,8 @@
                                     @else
                                         <img src="{{ url('assets/concert.png') }}" alt="{{ $event->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                                     @endif
-                                    <div class="absolute top-4 left-4">
-                                        <span class="px-3.5 py-1 bg-white border-2 border-[#f1f5f9] shadow-[0_15px_35px_rgba(0,0,0,0.04)]/95 backdrop-blur text-[#103370] text-xs font-black rounded-full uppercase tracking-wider shadow-neu-spec border-none-sm border-none border-none">
-                                            {{ $event->category->name }}
-                                        </span>
+                                    <div class="event-category-badge">
+                                        {{ $event->category->name }}
                                     </div>
                                 </div>
                                 <div class="p-6 flex flex-col flex-1 space-y-4">

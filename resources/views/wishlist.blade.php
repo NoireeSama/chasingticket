@@ -50,7 +50,7 @@
                             </svg>
                         </button>
 
-                        <div class="absolute top-4 right-4 px-3.5 py-1 bg-[#b8ff00] text-[#103370] rounded-full text-xs font-black uppercase tracking-wider z-10 shadow-sm">
+                        <div class="event-category-badge !left-auto !right-4">
                             {{ $wishlist->event->category->name ?? 'Event' }}
                         </div>
 
